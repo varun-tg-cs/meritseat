@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: meritseat-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /

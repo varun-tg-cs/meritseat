@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MeritSeat — College admissions</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top"><span class="brand-icon">M<span>•</span></span><span>MeritSeat<small>COLLEGE ADMISSIONS</small></span></a>
+    <nav aria-label="Main navigation"><a href="#workflow">How it works</a><a href="#workspace">Workspace</a><a href="#records">Applications</a></nav>
+    <span class="engine-pill"><span class="pulse"></span> Powered by a C priority queue</span>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="overline light">ADMISSIONS, MADE UNDERSTANDABLE</div>
+        <h1>Every seat has a<br><em>fair next step.</em></h1>
+        <p>Register students, review each department's merit order, and allocate seats to the highest priority applicants.</p>
+        <div class="hero-actions"><a class="button button-lime" href="#workspace">Start with an application <span>↗</span></a><button id="demo-button" class="button button-outline" type="button" hidden>Try sample applicants</button></div>
+        <div class="hero-footnote">A local DSA project demo · No real admission decisions</div>
+      </div>
+      <div class="hero-visual" aria-label="Example merit based selection">
+        <div class="visual-header"><span>ILLUSTRATIVE EXAMPLE</span><span class="visual-icon">✦</span></div>
+        <div class="visual-seat"><span class="seat-round">01</span><span>Available seat</span><span class="seat-arrow">↓</span></div>
+        <div class="visual-candidates"><div><strong>96</strong><span>Sara Iyer</span><b>FIRST IN LINE</b></div><div><strong>96</strong><span>Mira Nair</span><small>Next in line</small></div><div><strong>88</strong><span>Asha Raman</span><small>Waiting</small></div></div>
+        <div class="visual-explain">Sara and Mira both scored 96 in the entrance exam and 90% in Class 12. Sara's Class 10 mark (92%) breaks the tie over Mira's 89%.</div>
+      </div>
+    </section>
+    <div class="page-content">
+      <section class="intro" id="workflow"><div class="overline">THE SIMPLE FLOW</div><h2>From application to seat.</h2><p>Each department has its own waiting queue. You decide when to run allocation.</p></section>
+      <section class="steps" aria-label="How admission works">
+        <article><span class="step-num">01</span><div><h3>Add applicants</h3><p>Enter marks and choose one department. They join its waiting queue.</p></div></article>
+        <article><span class="step-num">02</span><div><h3>Check the order</h3><p>The C priority queue puts the highest merit applicant first.</p></div></article>
+        <article><span class="step-num">03</span><div><h3>Allocate seats</h3><p>Fill vacancies from the top. The rest stay on the waiting list.</p></div></article>
+      </section>
+      <section class="workspace" id="workspace">
+        <div class="section-heading"><div><div class="overline">YOUR WORKSPACE</div><h2>Let's make an admission decision.</h2><p>Start with sample applicants or add your own.</p></div><div class="summary" id="summary" aria-live="polite"></div></div>
+        <div class="work-grid">
+          <section class="card add-card" aria-labelledby="add-title">
+            <div class="card-heading"><span class="round-icon">＋</span><div><span class="overline">STEP 01</span><h3 id="add-title">Add an applicant</h3></div></div>
+            <form id="add-form">
+              <label for="applicant-name">Full name</label><input id="applicant-name" name="name" placeholder="e.g. Asha Raman" minlength="2" maxlength="79" required>
+              <label for="add-department">Preferred department</label><select id="add-department" name="department" required></select>
+              <div class="field-grid"><div><label for="entrance-score">Entrance score</label><input id="entrance-score" name="score" type="text" inputmode="numeric" pattern="[0-9]{1,3}" maxlength="3" placeholder="0–100" required></div><div><label for="board-score">Class 12 %</label><input id="board-score" name="board" type="text" inputmode="numeric" pattern="[0-9]{1,3}" maxlength="3" placeholder="0–100" required></div><div><label for="tenth-score">Class 10 %</label><input id="tenth-score" name="tenth" type="text" inputmode="numeric" pattern="[0-9]{1,3}" maxlength="3" placeholder="0–100" required></div></div>
+              <button class="button button-dark full" type="submit">Add to waiting queue <span>→</span></button>
+            </form>
+            <p class="card-note">Adding an applicant does not allocate a seat. Run allocation when you're ready.</p>
+          </section>
+          <section class="card queue-card" aria-labelledby="queue-title">
+            <div class="card-heading"><span class="round-icon">↕</span><div><span class="overline">STEPS 02 &amp; 03</span><h3 id="queue-title">Review &amp; allocate</h3></div></div>
+            <label for="queue-department">Choose a department</label><select id="queue-department"></select>
+            <div class="capacity-setup"><div><label for="capacity-input">Seats in this department</label><p>Starts at 0. Set how many students can be admitted here.</p></div><div class="capacity-control"><input id="capacity-input" type="text" inputmode="numeric" pattern="[0-9]{1,3}" maxlength="3" aria-label="Total seats" placeholder="e.g. 3"><button id="capacity-button" class="button button-small" type="button">Save seats</button></div></div>
+            <div class="seat-summary" id="seat-summary"></div>
+            <div class="queue-header"><strong>Waiting in merit order</strong><span id="queue-count"></span></div>
+            <div id="queue-list" class="queue-list" aria-live="polite"></div>
+            <div class="priority-note"><span>ⓘ</span><p><strong>How priority works</strong><br>Higher entrance score → higher Class 12 percentage → higher Class 10 percentage → earlier application. An allocation round does not revoke seats already filled.</p></div>
+            <button id="allocate-button" class="button button-dark full" type="button"><span id="allocate-label">Allocate available seats</span><span>→</span></button>
+            <p class="capacity-hint">Each department has its own seat count. You can change it later, but not below the number already filled.</p>
+          </section>
+        </div>
+      </section>
+      <section class="card records" id="records"><div class="records-heading"><div><div class="overline">THE OUTCOME</div><h2>Application records</h2><p>Admitted students have seats. Waiting students remain in their department queue.</p></div><label class="search-label">Search<input id="search" type="search" placeholder="Name or application ID"></label></div><div class="table-scroll"><table><thead><tr><th>ID</th><th>APPLICANT</th><th>DEPARTMENT</th><th>ENTRANCE</th><th>CLASS 12</th><th>CLASS 10</th><th>STATUS</th><th></th></tr></thead><tbody id="applicant-rows"></tbody></table></div></section>
+      <details class="dsa-panel" id="heap"><summary><span class="dsa-icon">⌘</span><span><strong>See the DSA behind it</strong><small>Explore the actual binary heap stored by the C engine</small></span><span class="chevron">⌄</span></summary><div class="dsa-content"><p>The first card is the heap root. Each parent outranks its children. Heap order differs from the complete merit ranking shown above.</p><div id="heap-view" class="heap-view"></div><small>Each insertion and removal takes O(log n). Seat allocation removes the root until vacancies are filled.</small></div></details>
+      <footer>MeritSeat <span>·</span> College Admission Management System Using Priority Queues <span>·</span> Local project demo</footer>
+    </div>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

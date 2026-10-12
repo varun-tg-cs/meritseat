@@ -1,0 +1,7 @@
+.git
+admission
+*.exe
+*.zip
+data/
+__pycache__/
+tests/
