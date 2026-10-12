@@ -51,4 +51,6 @@ The prototype supports 512 total applicants and one department choice per applic
 
 ## Hosted demo
 
-The Dockerfile and `render.yaml` support a Render web service. See [DEPLOY_RENDER.md](DEPLOY_RENDER.md). The free tier's storage is temporary, so it is for fictional demo records only.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/varun-tg-cs/meritseat)
+
+Click the button, sign in to Render, review the single free web service, and approve the deployment. The Dockerfile and `render.yaml` contain the configuration. See [DEPLOY_RENDER.md](DEPLOY_RENDER.md). The free tier's storage is temporary, so it is for fictional demo records only.
